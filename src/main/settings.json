@@ -1,0 +1,55 @@
+{
+    "dbPath": "rssdb",
+    "feeds": [
+        {   
+            "name": "SubsPlease",
+            "rssUrl": "https://subsplease.org/rss/?t&r=720",
+            "command": {
+                "executable": "/usr/bin/deluge-console",
+                "argumentTemplates": [
+                    "connect ${ARG.delugeHost} ${ARG.delugeUsername} ${ARG.delugePassword}; add ${RSSITEM.link} -m \"${ARG.delugeDownloadBasePath}/${ARG.folderPrefix} ${RSSITEM.category}\"; exit"
+                ],
+                "variables": {
+                    "delugeHost": "192.168.0.253",
+                    "delugeUsername": "deluge",
+                    "delugePassword": "deluge123",
+                    "folderPrefix": "[SubsPlease]",
+                    "delugeDownloadBasePath": "/var/lib/deluge/Completed"
+                }
+            },
+            "bucketName": "SubsPlease720",
+            "key": "${RSSITEM.GUID}",
+            "rules": [
+                {
+                    "rssItemField": "title",
+                    "negate": true,
+                    "equals": [],
+                    "contains": [],
+                    "startsWith": [],
+                    "endsWith": [],
+                    "equalsIgnoreCase": [],
+                    "containsIgnoreCase": [
+                        "batch"
+                    ],
+                    "startsWithIgnoreCase": [],
+                    "endsWithIgnoreCase": []
+                },
+                {
+                    "rssItemField": "category",
+                    "requirement": "ANY",
+                    "equals": [],
+                    "contains": [],
+                    "startsWith": [],
+                    "endsWith": [],
+                    "equalsIgnoreCase": [],
+                    "containsIgnoreCase": [
+                        "Dragon Quest - Dai no Daibouken",
+                        "One Piece"
+                    ],
+                    "startsWithIgnoreCase": [],
+                    "endsWithIgnoreCase": []
+                }
+            ]
+        }
+    ]
+}
