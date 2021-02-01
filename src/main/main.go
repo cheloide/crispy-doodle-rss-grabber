@@ -341,17 +341,17 @@ func readJSONSettings(path string) (Settings, error) {
 }
 
 func keyExists(bucketName string, key string) bool {
-	var exists bool
-	err := database.View(func(tx *bolt.Tx) error {
+	var exists bool = false
+	database.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte(bucketName))
+		if b == nil {
+			log.Printf("Bucket %s not found!\n", bucketName)
+			return nil
+		}
 		v := b.Get([]byte(key))
 		exists = fmt.Sprintf("%s", v) == "1"
 		return nil
 	})
-	if err != nil {
-		log.Println("Error accessing DB", err)
-		return false
-	}
 	return exists
 }
 
