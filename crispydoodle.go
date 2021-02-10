@@ -32,17 +32,27 @@ func main() {
 
 	var settingsHash string
 	var settings Settings
-	if err := getSettings(defaultSettingsPath, &settingsHash, &settings); err != nil {
+	var settingsPath string
+	if len(os.Args) > 1 {
+		settingsPath = os.Args[1]
+		fmt.Println("Custom configuration path argument found ", settingsPath)
+	} else {
+		settingsPath = defaultSettingsPath
+	}
+
+	if err := getSettings(settingsPath, &settingsHash, &settings); err != nil {
 		log.Fatal(err)
 	}
+
 	db, err := bolt.Open(settings.DBPath, 0644, nil)
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
+
 	database = db
-	processRSS(&settingsHash, &settings)
+	// processRSS(&settingsHash, &settings)
 	fmt.Printf("Finished Successfully (%s)\n", time.Now().Format(time.RFC3339))
+
 }
 
 func processRSS(settingsHash *string, settings *Settings) {
@@ -275,12 +285,10 @@ func getSettings(settingsPath string, settingsHash *string, settings *Settings) 
 
 	file, err := readFile(settingsPath)
 	if err != nil {
-		log.Print(err)
 		return err
 	}
 	hash, err := getShaHashFromFile(file)
 	if err != nil {
-		log.Print(err)
 		return err
 	}
 
@@ -291,7 +299,6 @@ func getSettings(settingsPath string, settingsHash *string, settings *Settings) 
 		var err error
 		s, err := readJSONSettings(settingsPath)
 		if err != nil {
-			log.Print(err)
 			return err
 		}
 		*settings = s
@@ -303,7 +310,6 @@ func getSettings(settingsPath string, settingsHash *string, settings *Settings) 
 func readFile(path string) (*os.File, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		log.Print(err)
 		return nil, err
 	}
 	return f, nil

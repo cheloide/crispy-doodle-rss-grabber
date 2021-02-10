@@ -1,11 +1,11 @@
 {
     "dbPath": "rssdb",
     "feeds": [
-        {   
+        {
             "name": "SubsPlease",
             "rssUrl": "https://subsplease.org/rss/?t&r=720",
             "command": {
-                "executable": "/usr/bin/deluge-console",
+                "executable": "echo",
                 "argumentTemplates": [
                     "connect ${ARG.delugeHost} ${ARG.delugeUsername} ${ARG.delugePassword}; add ${RSSITEM.link} -m \"${ARG.delugeDownloadBasePath}/${ARG.folderPrefix} ${RSSITEM.category}\"; exit"
                 ],
@@ -43,8 +43,32 @@
                     "endsWith": [],
                     "equalsIgnoreCase": [],
                     "containsIgnoreCase": [
+                        "Black Clover",
+                        "Boruto - Naruto Next Generations",
                         "Dragon Quest - Dai no Daibouken",
-                        "One Piece"
+                        "Jujutsu Kaisen",
+                        "Kimetsu no Yaiba",
+                        "One Piece",
+                        "Yakusoku no Neverland",
+                        "Dr. Stone",
+                        "Re Zero",
+                        "Tensei shitara Slime Datta Ken",
+                        "Log Horizon",
+                        "Beastars",
+                        "Nanatsu no Taizai",
+                        "Mushoku Tensei",
+                        "Kumo Desu ga",
+                        "World Trigger",
+                        "Non Non Biyori",
+                        "Ore dake Haireru",
+                        "Tatoeba Last Dungeon Mae no Mura no Shounen ga Joban no Machi de Kurasu Youna Monogatari",
+                        "Ex-Arm",
+                        "Urasekai Picnic",
+                        "Hortensia Saga",
+                        "Kai Byoui Ramune",
+                        "Back Arrow",
+                        "Praeter no Kizu",
+                        "Wonder Egg Priority"
                     ],
                     "startsWithIgnoreCase": [],
                     "endsWithIgnoreCase": []
